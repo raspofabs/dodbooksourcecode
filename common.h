@@ -13,7 +13,11 @@
 #ifndef _ISOC11_SOURCE
 void * aligned_alloc( size_t alignment, size_t num_bytes ) {
 	void *mem = 0;
+	#ifdef __APPLE__
+	posix_memalign((void **)&mem, alignment, num_bytes);
+	#elif
 	mem = memalign( alignment, num_bytes );
+	#endif
 	return mem;
 }
 #endif

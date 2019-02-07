@@ -3,8 +3,16 @@ ifeq ($(USE_CLANG),1)
 CC=clang
 LINK=-lm -lstdc++
 else
+
+ifeq ($(shell uname -s),Darwin)
+#brew install gcc
+CC=/usr/local/opt/gcc/bin/g++-8
+else
 CC=g++
+endif
+
 COMPILE=-march=native
+
 endif
 SOURCE=$(wildcard *.cpp)
 OUTS=$(SOURCE:.cpp=.out)
