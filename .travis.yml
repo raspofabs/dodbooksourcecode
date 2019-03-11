@@ -1,0 +1,79 @@
+language: cpp
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode8
+      env:
+        - CMAKE_BUILD_TOOL="Unix Makefiles"
+        - BUILD_COMMAND=make
+    - os: osx
+      osx_image: xcode9
+      env:
+        - MATRIX_EVAL="wget https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-mac.zip && unzip ninja-mac.zip && export PATH=$PWD:$PATH"
+        - CMAKE_BUILD_TOOL="Unix Makefiles"
+        - BUILD_COMMAND=make
+    - os: linux
+      env:
+        - CMAKE_BUILD_TOOL="Unix Makefiles"
+        - BUILD_COMMAND=make
+      addons:
+        apt:
+          packages:
+            - ninja-build
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env:
+        - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+        - CMAKE_BUILD_TOOL="Unix Makefiles"
+        - BUILD_COMMAND=make
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+        - CMAKE_BUILD_TOOL="Unix Makefiles"
+        - BUILD_COMMAND=make
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+        - CMAKE_BUILD_TOOL="Unix Makefiles"
+        - BUILD_COMMAND=make
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7 ninja-build
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - CMAKE_BUILD_TOOL="Unix Makefiles"
+        - BUILD_COMMAND=make
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake .. -G "${CMAKE_BUILD_TOOL}" -DCMAKE_BUILD_TYPE=Release
+
+script:
+  - ${BUILD_COMMAND}
+  - ${BUILD_COMMAND} run_all
