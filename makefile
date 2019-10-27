@@ -5,10 +5,12 @@ LINK=-lm -lstdc++
 else
 
 ifeq ($(shell uname -s),Darwin)
-#brew install gcc
-CC=/usr/local/opt/gcc/bin/g++-8
+	# brew install g++ libomp
+	CC=$(shell whereis g++)
+	FOPENMP=-Xpreprocessor -fopenmp -lomp
 else
-CC=g++
+	CC=g++
+	FOPENMP=-fopenmp
 endif
 
 COMPILE=-march=native
@@ -23,7 +25,7 @@ ADDITIONAL=geom.o
 
 CFLAGS=$(COMPILE) -O3 -DNDEBUG -std=c++11 -Wall -Wextra -Werror
 #CFLAGS=$(COMPILE) -g -O0 -std=c++11 -Wall -Wextra -Werror
-FLAGS=$(CFLAGS) -fopenmp $(LINK)
+FLAGS=$(CFLAGS) $(FOPENMP) $(LINK)
 
 all: $(TARGETS)
 
