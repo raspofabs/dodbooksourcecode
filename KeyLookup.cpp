@@ -117,8 +117,6 @@ struct ClumpedAnim {
 		for( int start = 0; start < numPrefetchedKeyTimes; ++start ) {
 			if( firstStage[start] > t ) {
 				int l = start*keysPerLump;
-				int h = l + keysPerLump;
-				h = h > numKeys ? numKeys : h;
 				return GetKeyAtTimeLinear( t, l );
 			}
 		}
