@@ -127,7 +127,7 @@ void SIMD_SSE_UpdateParticles( particle_buffer *pb, float delta_time ) {
 	__m128 mmgd2 = _mm_load1_ps( &f_gd2 );
 
 	__m128 *px = (__m128*)pb->posx;
-	__m128 *py = (__m128*)pb->posx;
+	__m128 *py = (__m128*)pb->posy;
 	__m128 *pz = (__m128*)pb->posz;
 	__m128 *vx = (__m128*)pb->vx;
 	__m128 *vy = (__m128*)pb->vy;
@@ -161,7 +161,7 @@ void SIMD_SSE_UpdateParticlesSliced( particle_buffer *pb, float delta_time ) {
 	__m128 mmgd2 = _mm_load1_ps( &f_gd2 );
 
 	__m128 *px = (__m128*)pb->posx;
-	__m128 *py = (__m128*)pb->posx;
+	__m128 *py = (__m128*)pb->posy;
 	__m128 *pz = (__m128*)pb->posz;
 	__m128 *vx = (__m128*)pb->vx;
 	__m128 *vy = (__m128*)pb->vy;
@@ -202,7 +202,7 @@ void SIMD_AVX_UpdateParticles( particle_buffer *pb, float delta_time ) {
 	__m256 mm256gd2 = _mm256_set1_ps( f_gd2 );
 
 	__m256 *px = (__m256*)pb->posx;
-	__m256 *py = (__m256*)pb->posx;
+	__m256 *py = (__m256*)pb->posy;
 	__m256 *pz = (__m256*)pb->posz;
 	__m256 *vx = (__m256*)pb->vx;
 	__m256 *vy = (__m256*)pb->vy;
